@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend en GitHub Pages con Backend PHP</title>
+</head>
+<body>
+    <h1>Mi Página en GitHub Pages</h1>
+    <p>Comunicándome con un Backend PHP en Replit.</p>
+    <button id="getPhpMessage">Obtener Mensaje de PHP</button>
+    <div id="phpResponseMessage">Cargando...</div>
+
+    <script>
+        document.getElementById('getPhpMessage').addEventListener('click', async () => {
+            const phpResponseMessageDiv = document.getElementById('phpResponseMessage');
+            phpResponseMessageDiv.textContent = 'Solicitando mensaje del backend PHP...';
+
+            // *** ¡MUY IMPORTANTE! Reemplaza con la URL REAL de tu backend PHP en Replit ***
+            // La URL que copiaste del paso 3 de Replit, y añade la acción
+            const backendPhpUrl = 'https://mi-php-backend.tu-usuario.repl.co/?action=saludo'; 
+
+            try {
+                const response = await fetch(backendPhpUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                phpResponseMessageDiv.textContent = `Mensaje del Backend PHP: ${data.message} (Hora: ${data.timestamp})`;
+
+            } catch (error) {
+                console.error('Error al conectar con el backend PHP:', error);
+                phpResponseMessageDiv.textContent = `Error: ${error.message}. Revisa la consola para más detalles.`;
+            }
+        });
+    </script>
+</body>
+</html>
